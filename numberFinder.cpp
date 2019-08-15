@@ -16,7 +16,7 @@ int main(){
 	int pool[numLeft];
 	int noGoodNums[numLeft];
 	int findLastNum[numLeft];
-	
+	int numOfTimesPerNum[numLeft];
 	// pool[] will hold all the numbers available to be selected from
 	for(int a = 0; a < numLeft; a++){
 		pool[a] = (a + 1);
@@ -105,10 +105,51 @@ int main(){
 		cout << findLastNum[a] << " ";
 	}
 	cout << endl;
+	
+	// Find the 10's range which was last selected...
+	int zero10s, ten10s, twenty10s, thirty10s, forty10s, fifty10s = 0;
+	for(int x = 0; x < numOfLottoNums; x++){
+		int temp = nums[x] / 10;
+		if(temp < 1)
+			zero10s++;
+		else if(temp < 2)
+			ten10s++;
+		else if(temp < 3)
+			twenty10s++;
+		else if(temp < 4)
+			thirty10s++;
+		else if(temp < 5)
+			forty10s++;
+		else
+			fifty10s++;
+	}
+		cout << "0's: " << zero10s << endl;
+		cout << "10's: " << ten10s << endl;
+		cout << "20's: " << twenty10s << endl;
+		cout << "30's: " << thirty10s << endl;
+		cout << "40's: " << forty10s << endl;
+		cout << "50's: " << (fifty10s * 2) << endl;  // since only 5 #'s in 50 range
+	
+	// How many times have each numbers been picked recently
+	for(int i = 0; i < 54; i++){
+		numOfTimesPerNum[i] = 0;
+	}
+	
+	for(int x = 0; x < numOfLottoNums; x++){
+		int temp = nums[x];
+		numOfTimesPerNum[temp - 1] = numOfTimesPerNum[temp - 1] + 1;
+	}
+	
+	for(int x = 0; x < 54; x++){
+		cout << (x + 1) << ":  " << numOfTimesPerNum[x] << endl;
+	}
+	
 	// Just to print out the bad numbers, currently having duplicates 
 	for(int i = 0; i < numBadNums; i++){
 		cout << noGoodNums[i] << " ";
 	}
+	
+	
 	cout << endl;
 	
 	inFile.close();
